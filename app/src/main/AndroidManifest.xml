@@ -5,7 +5,7 @@
     android:versionName="1.0"
     package="com.nabesh.flagquizapp">
 
-    <dist:module dist:instant="true" />
+<!--    <dist:module dist:instant="true" />-->
 
     <application
         android:allowBackup="true"
@@ -14,13 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar">
-        <meta-data
-            android:name="com.google.android.actions"
-            android:resource="@xml/incorrect_shake" />
+<!--        <meta-data-->
+<!--            android:name="com.google.android.actions"-->
+<!--            android:resource="@xml/incorrect_shake" />-->
 
         <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
