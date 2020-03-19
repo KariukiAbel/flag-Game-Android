@@ -197,10 +197,16 @@ public class MainActivity extends AppCompatActivity {
             }
 
             //randomly replace one button with the correct answer
-        int row = random.nextInt(guessRows);
+            int row = random.nextInt(guessRows);
             int column = random.nextInt(3);
             TableRow randomTableRow = getTableRow(row);
             String countryName = getCountryName(correctAnswer);
         ((Button)randomTableRow.getChildAt(column)).setText(countryName);
         }
+
+        //returns a specified TableRow
+    private TableRow getTableRow(int row) {
+        return (TableRow)buttonTableLayout.getChildAt(row);
     }
+
+}
