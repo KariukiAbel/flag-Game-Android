@@ -277,6 +277,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //utility method that disables all answer buttons
+    private void disableButtons() {
+        for (int row = 0; row < buttonTableLayout.getChildCount(); ++row){
+            TableRow tableRow = (TableRow) buttonTableLayout.getChildAt(row);
+            for (int i = 0; i < tableRow.getChildCount(); ++i)
+                tableRow.getChildAt(i).setEnabled(false);
+        }
+    }
+
 
 
 }
