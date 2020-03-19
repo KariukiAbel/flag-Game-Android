@@ -204,9 +204,17 @@ public class MainActivity extends AppCompatActivity {
         ((Button)randomTableRow.getChildAt(column)).setText(countryName);
         }
 
-        //returns a specified TableRow
+    //parses the country flag file name and returns the country name
+    private String getCountryName(String name) {
+        return name.substring(name.indexOf("-") + 1).replace('_',' ');
+    }
+
+    //returns a specified TableRow
     private TableRow getTableRow(int row) {
         return (TableRow)buttonTableLayout.getChildAt(row);
     }
+
+    //parses the country flag file name and returns the country name
+
 
 }
