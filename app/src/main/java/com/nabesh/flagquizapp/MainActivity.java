@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -214,7 +215,12 @@ public class MainActivity extends AppCompatActivity {
         return (TableRow)buttonTableLayout.getChildAt(row);
     }
 
-    //parses the country flag file name and returns the country name
+  public View.OnClickListener newGuessButtonListener = new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+          submitGuess((Button) v);
+      }
+  };
 
 
 }
