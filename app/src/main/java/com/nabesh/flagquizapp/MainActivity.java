@@ -1,8 +1,10 @@
 package com.nabesh.flagquizapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -222,8 +224,59 @@ public class MainActivity extends AppCompatActivity {
       }
   };
 
+    //called when the user submits an answer
     private void submitGuess(Button guessButton) {
+        String guess = guessButton.getText().toString();
+        String answer = getCountryName(correctAnswer);
+        ++totalGuesses; //increment the number of guesses the user has made
+
+        if (guess.equals(answer)){
+            ++correctAnswers;
+
+            //display correct in green colour
+            answerTextView.setText(answer + "!");
+            answerTextView.setTextColor(getResources().getColor(R.color.correct_answe ));
+            disableButtons();
+
+            if (correctAnswers == 10){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.reset_quiz);
+
+                //set the AlertDialog's message to display game results
+                builder.setMessage(String.format("%d %s, %.02f%% %s",totalGuesses,
+                        getResources().getString(R.string.guesses), (1000 / (double) totalGuesses),
+                        getResources().getString(R.string.correct)));
+                builder.setCancelable(false);
+
+                //add reset quiz button
+                builder.setPositiveButton(R.string.reset_quiz, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        resetQuiz();
+                    }
+                });
+                AlertDialog resetDialog = builder.create();
+                resetDialog.show();
+            }else{
+                //load next flag after 1- second delay
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadNextFlag();
+                    }
+                }, 1000);
+            }
+        }else{
+            //play animation
+            flagImageView.startAnimation(shakeAnimation);
+
+            //display incorrect in red
+            answerTextView.setText(R.string.incorrect_answer);
+            answerTextView.setTextColor(getResources().getColor(R.color.incorect_answer));
+            guessButton.setEnabled(false);
+        }
     }
+
 
 
 }
