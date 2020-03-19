@@ -218,9 +218,12 @@ public class MainActivity extends AppCompatActivity {
   public View.OnClickListener newGuessButtonListener = new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-          submitGuess((Button) v);
+          submitGuess((Button) view);
       }
   };
+
+    private void submitGuess(Button guessButton) {
+    }
 
 
 }
