@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -285,7 +286,20 @@ public class MainActivity extends AppCompatActivity {
                 tableRow.getChildAt(i).setEnabled(false);
         }
     }
+    //constants for each menu id
+    private final int CHOICES_MENU_ID = Menu.FIRST;
+    private final int REGIONS_MENU_ID = Menu.FIRST + 1;
 
+    //called when the user accesses the optins menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
 
+        //add two options to the menu
+        menu.add(Menu.NONE, CHOICES_MENU_ID, Menu.NONE,R.string.choices);
+        menu.add(Menu.NONE, REGIONS_MENU_ID, Menu.NONE, R.string.regions);
+
+        return true;
+    }
 
 }
