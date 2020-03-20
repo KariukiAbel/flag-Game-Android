@@ -319,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //update guessRows to match user's choice
-                        guessRows = Integer.parseInt(possibleChoices[item].toString()) / 3;
+                        guessRows = Integer.parseInt(possibleChoices[i].toString()) / 3;
                         resetQuiz();
                     }
                 });
