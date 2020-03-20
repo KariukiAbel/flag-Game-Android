@@ -1,5 +1,6 @@
 package com.nabesh.flagquizapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +13,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -302,4 +304,73 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //called when the user selects an option from the menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case CHOICES_MENU_ID:
+                //create a list of the possible numbers of answer choices
+                final String[] possibleChoices = getResources().getStringArray(R.array.guessesList);
+
+                AlertDialog.Builder choiceBuilder = new AlertDialog.Builder(this);
+                choiceBuilder.setTitle(R.string.choices);
+                choiceBuilder.setItems(R.array.guessesList, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //update guessRows to match user's choice
+                        guessRows = Integer.parseInt(possibleChoices[item].toString()) / 3;
+                        resetQuiz();
+                    }
+                });
+
+                AlertDialog choicesDialog = choiceBuilder.create();
+                choicesDialog.show();
+                return true;
+
+            case REGIONS_MENU_ID:
+                //get array of world regions
+                final String[] regionNames = regionsMap.keySet().toArray(new String[regionsMap.size()]);
+
+//                boolean array representing whether each region is enabled
+                boolean[] regionsEnabled = new boolean[regionsMap.size()];
+                for (int i = 0; i < regionsEnabled.length; ++i) {
+                    regionsEnabled[i] = regionsMap.get(regionNames[i]);
+                }
+
+                AlertDialog.Builder regionsBuilder = new AlertDialog.Builder(this);
+                regionsBuilder.setTitle(R.string.regions);
+
+                //replace _ with space in region names for display purposes
+                String[] displayNames = new String[regionNames.length];
+                for (int i = 0; i < regionNames.length; ++i) {
+                    displayNames[i] = regionNames[i].replace("_", " ");
+
+                    //add displayNames to the Dialog and set the behaviour when one of the item is clicked
+                    regionsBuilder.setMultiChoiceItems(displayNames,
+                            regionsEnabled,
+                            new DialogInterface.OnMultiChoiceClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                            //include or exclude the clicked region depending on whether or not it's checked
+                            regionsMap.put(regionNames[i].toString(),b);
+                        }
+                    });
+
+                    //rest quiz when user presses the "Reset quiz" button
+                    regionsBuilder.setPositiveButton(R.string.reset_quiz, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            resetQuiz();
+                        }
+                    });
+                    AlertDialog regionDialog = regionsBuilder.create();
+                    regionDialog.show();
+                    return true;
+                }
+        }
+
+        return super.onOptionsItemSelected(item);
+
+    }
 }
